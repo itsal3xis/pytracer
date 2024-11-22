@@ -9,8 +9,8 @@ def clear_console(times):
 
 class PC:
     def __init__(self, id):
-        id = id
-        self.hostname = 'PC'
+        self.id = id
+        self.hostname = 'PC' + f'{self.id}'
         self.ipv4 = '0.0.0.0'
         self.mask = '0.0.0.0'
         self.mac = '0099.0000.0000'  #0099 is this project manufacturer tag for a MAC address
@@ -30,10 +30,15 @@ class PC:
     def net_config(self):
         clear_console(200)
         while True:
+            clear_console(1)
             command = input(f"{self.hostname}:\\Network\\> ")
-            command_parts = command.split() 
-            main_command = command_parts[0]  
-            options = command_parts[1:]
+            command_parts = command.split()
+            
+            if len(command_parts) > 1:
+                main_command = command_parts[0]    
+                options = command_parts[1:]    
+            else:
+                main_command = command
 
             if main_command == 'ipv4':
                 if len(options) == 1:
@@ -45,6 +50,12 @@ class PC:
                 print('|  IPV4                  MASK                    MAC       |')
                 print(f'| {self.ipv4}              {self.mask}              {self.mac} |')
                 print('+----------------------------------------------------------+')
+
+            elif main_command == 'clear':
+                clear_console(200)
+
+            elif main_command == 'exit':
+                self.commands()
 
             elif main_command == 'mask':
                 if len(options) == 1:
@@ -70,9 +81,7 @@ class PC:
 
             elif main_command.strip() == '': 
                     pass
-            
-            #elif #
-            
+                        
             else:
                 print(f"Unknown command: {command}")
 
@@ -133,8 +142,8 @@ class PC:
                 print(f"Unknown command: {command}")
 
     
-    
+'''
 a = PC(1)
 a.commands()
-
+'''
 
